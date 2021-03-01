@@ -1,0 +1,21 @@
+{
+  "name": "electron-google-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "build": {
+    "productName": "Google Chat",
+    "appid": "dev.seanking.chat",
+    "icon": "icon.png"
+  },
+  "keywords": [],
+  "author": "Sean King",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.3.0",
+    "electron-builder": "^22.9.1"
+  }
+}
