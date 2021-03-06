@@ -12,7 +12,7 @@
     "productName": "Google Chat",
     "appId": "dev.seanking.chat",
     "mac": {
-      "category": "dev.seanking.chat.category.social"
+      "category": "public.app-category.social-networking"
     }
   },
   "keywords": [],
