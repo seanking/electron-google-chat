@@ -30,14 +30,44 @@ npm run pack -- --arm64
 
 ## Multi-platform Builds
 
-Docker builds provide a way to build the application for many platforms. The following example uses the 
-[electronuserland/builder](https://hub.docker.com/r/electronuserland/builder) images to build the appliations for Linux.
+Docker builds provide a way to build the application for many platforms. 
+
+### Linux 
+
+The following example uses the [electronuserland/builder](https://hub.docker.com/r/electronuserland/builder) 
+images to build the appliations for Linux.
 
 ```console
-docker run -it --rm -v "$PWD":/project -w /project electronuserland/builder npm run pack
+docker run --rm -ti \
+ --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|NPM_|BUILD_') \
+ --env ELECTRON_CACHE="/root/.cache/electron" \
+ --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
+ -v ${PWD}:/project \
+ -v ${PWD##*/}-node-modules:/project/node_modules \
+ -v ~/.cache/electron:/root/.cache/electron \
+ -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+ electronuserland/builder
 
+ npm install
+ npm run pack
 ```
 
+### Windows
 
+The following example uses the [electronuserland/builder](https://hub.docker.com/r/electronuserland/builder) 
+images to build the appliations for Windows with the support of [wine](https://en.wikipedia.org/wiki/Wine_(software)).
 
+```console
+docker run --rm -ti \
+ --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|NPM_|BUILD_') \
+ --env ELECTRON_CACHE="/root/.cache/electron" \
+ --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
+ -v ${PWD}:/project \
+ -v ${PWD##*/}-node-modules:/project/node_modules \
+ -v ~/.cache/electron:/root/.cache/electron \
+ -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+ electronuserland/builder:wine
 
+ npm install
+ npm run pack -- --win
+```
