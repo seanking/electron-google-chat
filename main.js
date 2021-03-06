@@ -1,16 +1,25 @@
 const path = require('path')
 const { app, shell, BrowserWindow, ipcMain } = require('electron')
-
+const windowStateKeeper = require('electron-window-state');
 
 function createWindow() {
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 800,
+    defaultHeight: 600
+  });
+
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    'x': mainWindowState.x,
+    'y': mainWindowState.y,
+    'width': mainWindowState.width,
+    'height': mainWindowState.height,
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, "renderer.js")
     }
   })
+
+  mainWindowState.manage(win);
 
   win.loadURL('https://chat.google.com')
 
