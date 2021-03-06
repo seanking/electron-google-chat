@@ -1,5 +1,5 @@
 const path = require('path')
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, shell, BrowserWindow, ipcMain } = require('electron')
 
 
 function createWindow() {
@@ -20,6 +20,11 @@ function createWindow() {
       win.hide();
     }
   })
+
+  win.webContents.on("new-window", function(event, url) {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 }
 
 function isWindowFocused() {
