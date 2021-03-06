@@ -4,12 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "build": {
     "productName": "Google Chat",
-    "appid": "dev.seanking.chat",
-    "icon": "icon.png"
+    "appId": "dev.seanking.chat",
+    "mac": {
+      "category": "dev.seanking.chat.category.social"
+    }
   },
   "keywords": [],
   "author": "Sean King",
