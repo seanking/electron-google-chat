@@ -1,11 +1,10 @@
 const ipc = require('electron').ipcRenderer;
 
-console.log("testing renderer");
+class NotificationOverride extends Notification {
+    constructor (title, options) {
+        super(title, options);
+        ipc.send("notification-show", {title: title, options: options});
+    }
+}
 
-var Notification = function(title,ops) {
-    ipc.send("notification-show", {title: title, options: ops});
-};
-
-Notification.requestPermission = () => {};
-Notification.permission = "granted";
-window.Notification = Notification;
+window.Notification = NotificationOverride;
