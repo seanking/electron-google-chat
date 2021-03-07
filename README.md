@@ -1,5 +1,13 @@
 # Electron for Google Chat
 
+## Dependencies
+
+Use the following command to install dependencies.
+
+```console
+npm install
+``` 
+
 ## Run
 
 Use the following command to run a build of the application.
