@@ -2,6 +2,14 @@ const path = require('path')
 const { app, shell, BrowserWindow, ipcMain } = require('electron')
 const windowStateKeeper = require('electron-window-state');
 
+function isWindows() {
+  return process.platform === 'win32';
+}
+
+function isMacOS() {
+  return process.platform === 'darwin';
+}
+
 function createWindow() {
   let mainWindowState = windowStateKeeper({
     defaultWidth: 800,
@@ -21,7 +29,7 @@ function createWindow() {
 
   mainWindowState.manage(win);
 
-  if(process.platform === 'win32') {
+  if(isWindows()) {
     new Badge(win, {});
   }
   
@@ -55,7 +63,7 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', (event) => {
-  if (process.platform !== 'darwin') {
+  if (isMacOS()) {
     app.quit()
   }
 });
@@ -69,7 +77,7 @@ app.on('browser-window-focus', () => {
 });
 
 app.on('before-quit', () => {
-  if (process.platform === 'darwin') {
+  if (isMacOS()) {
     app.exit();
   }
 });
