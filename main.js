@@ -51,7 +51,7 @@ function createWindow() {
   win.loadURL('https://chat.google.com');
 
   win.on('close', function(event) {
-    if (process.platform === 'darwin') {
+    if (isMacOS()) {
       event.preventDefault();
       win.hide();
     }
@@ -94,8 +94,6 @@ app.on('before-quit', () => {
 });
 
 ipcMain.on('update-badge', function(event, count) {
-  if (!window.isFocused) {
-    const badgeCount = count === null ? 0 : count;
-    app.setBadgeCount(badgeCount);
-  }
+  const badgeCount = count === null ? 0 : count;
+  app.setBadgeCount(badgeCount);
 });
