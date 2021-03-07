@@ -1,9 +1,16 @@
 const ipc = require('electron').ipcRenderer;
 
+let notificationCount = 0;
+
+ipc.on('clear-notifications', (event, arg) => {
+    notificationCount = 0;
+    ipc.send("update-badge", null);
+});
+
 class NotificationOverride extends Notification {
     constructor (title, options) {
         super(title, options);
-        ipc.send("notification-show", {title: title, options: options});
+        ipc.send("update-badge", ++notificationCount);
     }
 }
 

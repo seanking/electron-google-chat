@@ -9,10 +9,10 @@ function createWindow() {
   });
 
   const win = new BrowserWindow({
-    'x': mainWindowState.x,
-    'y': mainWindowState.y,
-    'width': mainWindowState.width,
-    'height': mainWindowState.height,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, "renderer.js")
@@ -20,7 +20,7 @@ function createWindow() {
   })
 
   mainWindowState.manage(win);
-
+  
   win.loadURL('https://chat.google.com')
 
   win.on('close', function(event){
@@ -34,6 +34,8 @@ function createWindow() {
     event.preventDefault();
     shell.openExternal(url);
   });
+
+  return win;
 }
 
 function isWindowFocused() {
@@ -42,7 +44,11 @@ function isWindowFocused() {
   }, false);
 }
 
-app.whenReady().then(createWindow);
+let window = null;
+
+app.whenReady().then(() => {
+  window = createWindow()
+});
 
 app.on('window-all-closed', (event) => {
   if (process.platform !== 'darwin') {
@@ -51,17 +57,11 @@ app.on('window-all-closed', (event) => {
 });
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  } else {
-    BrowserWindow.getAllWindows().forEach( (win) => {
-      win.show();
-    });
-  }
+  window.show();
 });
 
 app.on('browser-window-focus', () => {
-  app.setBadgeCount(0);
+  window.webContents.send("clear-notifications");
 });
 
 app.on('before-quit', () => {
@@ -70,9 +70,9 @@ app.on('before-quit', () => {
   }
 });
 
-ipcMain.on('notification-show', function (event, arg) {
+ipcMain.on('update-badge', function (event, count) {
   if (!isWindowFocused()) {
-    const count = app.getBadgeCount() + 1;
-    app.setBadgeCount(count);
+    const badgeCount = count === null ? 0 : count;
+    app.setBadgeCount(badgeCount);
   }
 });
