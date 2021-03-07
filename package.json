@@ -24,6 +24,7 @@
     "electron-builder": "^22.9.1"
   },
   "dependencies": {
-    "electron-window-state": "^5.0.3"
+    "electron-window-state": "^5.0.3",
+    "electron-windows-badge": "^1.1.0"
   }
 }

@@ -20,6 +20,10 @@ function createWindow() {
   })
 
   mainWindowState.manage(win);
+
+  if(process.platform === 'win32') {
+    new Badge(win, {});
+  }
   
   win.loadURL('https://chat.google.com')
 
