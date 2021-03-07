@@ -69,7 +69,6 @@ let window = null;
 
 app.whenReady().then(() => {
   window = createWindow();
-  window.webContents.openDevTools();
 });
 
 
