@@ -2,14 +2,29 @@ const path = require('path');
 const {app, shell, BrowserWindow, ipcMain} = require('electron');
 const windowStateKeeper = require('electron-window-state');
 
+/**
+ * Identify if the OS is Windows.
+ *
+ * @return {boolean} True if the OS is Windows.
+ */
 function isWindows() {
   return process.platform === 'win32';
 }
 
+/**
+ * Identify if the OS is macOS.
+ *
+ * @return {boolean} True if the OS is macOS.
+ */
 function isMacOS() {
   return process.platform === 'darwin';
 }
 
+/**
+ * Creates a new BrowserWindow.
+ *
+ * @return {BrowserWindow} The main browser window.
+ */
 function createWindow() {
   const mainWindowState = windowStateKeeper({
     defaultWidth: 800,
@@ -50,12 +65,6 @@ function createWindow() {
   return win;
 }
 
-function isWindowFocused() {
-  return BrowserWindow.getAllWindows().reduce((accumulator, current) => {
-    accumulator = accumulator.isFocused || current.isFocused;
-  }, false);
-}
-
 let window = null;
 
 app.whenReady().then(() => {
@@ -85,7 +94,7 @@ app.on('before-quit', () => {
 });
 
 ipcMain.on('update-badge', function(event, count) {
-  if (!isWindowFocused()) {
+  if (!window.isFocused) {
     const badgeCount = count === null ? 0 : count;
     app.setBadgeCount(badgeCount);
   }
