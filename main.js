@@ -1,5 +1,5 @@
-const path = require('path')
-const { app, shell, BrowserWindow, ipcMain } = require('electron')
+const path = require('path');
+const {app, shell, BrowserWindow, ipcMain} = require('electron');
 const windowStateKeeper = require('electron-window-state');
 
 function isWindows() {
@@ -11,9 +11,9 @@ function isMacOS() {
 }
 
 function createWindow() {
-  let mainWindowState = windowStateKeeper({
+  const mainWindowState = windowStateKeeper({
     defaultWidth: 800,
-    defaultHeight: 600
+    defaultHeight: 600,
   });
 
   const win = new BrowserWindow({
@@ -23,26 +23,26 @@ function createWindow() {
     height: mainWindowState.height,
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, "renderer.js")
-    }
-  })
+      preload: path.join(__dirname, 'renderer.js'),
+    },
+  });
 
   mainWindowState.manage(win);
 
-  if(isWindows()) {
+  if (isWindows()) {
     new Badge(win, {});
   }
-  
-  win.loadURL('https://chat.google.com')
 
-  win.on('close', function(event){
+  win.loadURL('https://chat.google.com');
+
+  win.on('close', function(event) {
     if (process.platform === 'darwin') {
       event.preventDefault();
       win.hide();
     }
-  })
+  });
 
-  win.webContents.on("new-window", function(event, url) {
+  win.webContents.on('new-window', function(event, url) {
     event.preventDefault();
     shell.openExternal(url);
   });
@@ -52,19 +52,21 @@ function createWindow() {
 
 function isWindowFocused() {
   return BrowserWindow.getAllWindows().reduce((accumulator, current) => {
-    accumulator = accumulator.isFocused || current.isFocused
+    accumulator = accumulator.isFocused || current.isFocused;
   }, false);
 }
 
 let window = null;
 
 app.whenReady().then(() => {
-  window = createWindow()
+  window = createWindow();
+  window.webContents.openDevTools();
 });
+
 
 app.on('window-all-closed', (event) => {
   if (isMacOS()) {
-    app.quit()
+    app.quit();
   }
 });
 
@@ -73,7 +75,7 @@ app.on('activate', () => {
 });
 
 app.on('browser-window-focus', () => {
-  window.webContents.send("clear-notifications");
+  window.webContents.send('clear-notifications');
 });
 
 app.on('before-quit', () => {
@@ -82,7 +84,7 @@ app.on('before-quit', () => {
   }
 });
 
-ipcMain.on('update-badge', function (event, count) {
+ipcMain.on('update-badge', function(event, count) {
   if (!isWindowFocused()) {
     const badgeCount = count === null ? 0 : count;
     app.setBadgeCount(badgeCount);
