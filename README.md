@@ -56,8 +56,8 @@ docker run --rm -ti \
  -v ~/.cache/electron-builder:/root/.cache/electron-builder \
  electronuserland/builder
 
- npm install
- npm run pack
+npm install
+npm run dist
 ```
 
 ### Windows
@@ -76,6 +76,6 @@ docker run --rm -ti \
  -v ~/.cache/electron-builder:/root/.cache/electron-builder \
  electronuserland/builder:wine
 
- npm install
- npm run pack -- --win
+npm install
+npm run dist -- --win
 ```
