@@ -14,9 +14,10 @@ function isWindows() {
 /**
  * Creates a new BrowserWindow.
  *
+ * @param {string} url The URL to load.
  * @return {BrowserWindow} The main browser window.
  */
-exports.createWindow = function() {
+exports.createWindow = function(url) {
   const mainWindowState = windowStateKeeper({
     defaultWidth: 800,
     defaultHeight: 600,
@@ -39,7 +40,7 @@ exports.createWindow = function() {
     new Badge(win, {});
   }
 
-  win.loadURL('https://chat.google.com');
+  win.loadURL(url);
 
   win.on('close', function(event) {
     if (isMacOS()) {

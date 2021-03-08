@@ -13,7 +13,7 @@ function isMacOS() {
 }
 
 app.whenReady().then(() => {
-  window = windowFactory.createWindow();
+  window = windowFactory.createWindow('https://chat.google.com');
 });
 
 app.on('window-all-closed', (event) => {
