@@ -8,7 +8,7 @@ ipc.on('clear-notifications', (event, arg) => {
 });
 
 /**
- * Override the Behavior of the Notification Class.
+ * Override the behavior of the Notification Class.
  */
 class NotificationOverride extends Notification {
   /**

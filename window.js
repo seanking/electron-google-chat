@@ -23,7 +23,7 @@ exports.createWindow = function(url) {
     height: mainWindowState.height,
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, 'renderer.js'),
+      preload: path.join(__dirname, 'notification.js'),
     },
   });
 
