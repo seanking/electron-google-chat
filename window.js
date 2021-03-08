@@ -2,14 +2,7 @@ const path = require('path');
 const {shell, BrowserWindow} = require('electron');
 const windowStateKeeper = require('electron-window-state');
 
-/**
- * Identify if the OS is Windows.
- *
- * @return {boolean} True if the OS is Windows.
- */
-function isWindows() {
-  return process.platform === 'win32';
-}
+const {isMacOS, isWindows} = require('./os-check');
 
 /**
  * Creates a new BrowserWindow.

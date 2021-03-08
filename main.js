@@ -1,16 +1,9 @@
-const windowFactory = require('./window.js');
 const {app, ipcMain} = require('electron');
 
-let window = null;
+const windowFactory = require('./window.js');
+const {isMacOS} = require('./os-check');
 
-/**
- * Identify if the OS is macOS.
- *
- * @return {boolean} True if the OS is macOS.
- */
-function isMacOS() {
-  return process.platform === 'darwin';
-}
+let window = null;
 
 app.whenReady().then(() => {
   window = windowFactory.createWindow('https://chat.google.com');
