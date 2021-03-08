@@ -1,4 +1,5 @@
 const {app, ipcMain} = require('electron');
+const contextMenu = require('electron-context-menu');
 
 const windowFactory = require('./window.js');
 const {isMacOS} = require('./os-check');
@@ -32,4 +33,20 @@ app.on('before-quit', () => {
 ipcMain.on('update-badge', function(event, count) {
   const badgeCount = count === null ? 0 : count;
   app.setBadgeCount(badgeCount);
+});
+
+contextMenu({
+  prepend: (defaultActions, parameters, browserWindow) => [
+    {
+      label: 'Rainbow',
+      visible: parameters.mediaType === 'image',
+    },
+    {
+      label: 'Search Google for “{selection}”',
+      visible: parameters.selectionText.trim().length > 0,
+      click: () => {
+        shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
+      },
+    },
+  ],
 });

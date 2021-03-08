@@ -15,10 +15,16 @@
     "appId": "dev.seanking.chat",
     "mac": {
       "category": "public.app-category.social-networking"
+    },
+    "linux": {
+      "target": "rpm",
     }
   },
   "keywords": [],
-  "author": "Sean King",
+  "author": {
+    "name": "Sean King",
+    "email": "r.sean.king@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "electron": "^11.3.0",
@@ -27,6 +33,7 @@
     "eslint-config-google": "^0.14.0"
   },
   "dependencies": {
+    "electron-context-menu": "^2.5.0",
     "electron-window-state": "^5.0.3",
     "electron-windows-badge": "^1.1.0"
   }
