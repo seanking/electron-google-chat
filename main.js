@@ -1,15 +1,7 @@
-const path = require('path');
-const {app, shell, BrowserWindow, ipcMain} = require('electron');
-const windowStateKeeper = require('electron-window-state');
+const windowFactory = require('./window.js');
+const {app, ipcMain} = require('electron');
 
-/**
- * Identify if the OS is Windows.
- *
- * @return {boolean} True if the OS is Windows.
- */
-function isWindows() {
-  return process.platform === 'win32';
-}
+let window = null;
 
 /**
  * Identify if the OS is macOS.
@@ -20,57 +12,9 @@ function isMacOS() {
   return process.platform === 'darwin';
 }
 
-/**
- * Creates a new BrowserWindow.
- *
- * @return {BrowserWindow} The main browser window.
- */
-function createWindow() {
-  const mainWindowState = windowStateKeeper({
-    defaultWidth: 800,
-    defaultHeight: 600,
-  });
-
-  const win = new BrowserWindow({
-    x: mainWindowState.x,
-    y: mainWindowState.y,
-    width: mainWindowState.width,
-    height: mainWindowState.height,
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, 'renderer.js'),
-    },
-  });
-
-  mainWindowState.manage(win);
-
-  if (isWindows()) {
-    new Badge(win, {});
-  }
-
-  win.loadURL('https://chat.google.com');
-
-  win.on('close', function(event) {
-    if (isMacOS()) {
-      event.preventDefault();
-      win.hide();
-    }
-  });
-
-  win.webContents.on('new-window', function(event, url) {
-    event.preventDefault();
-    shell.openExternal(url);
-  });
-
-  return win;
-}
-
-let window = null;
-
 app.whenReady().then(() => {
-  window = createWindow();
+  window = windowFactory.createWindow();
 });
-
 
 app.on('window-all-closed', (event) => {
   if (isMacOS()) {
