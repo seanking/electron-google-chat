@@ -1,5 +1,5 @@
 const path = require('path');
-const {shell, BrowserWindow} = require('electron');
+const {BrowserWindow} = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const Badge = require('electron-windows-badge');
 
@@ -42,11 +42,6 @@ exports.createWindow = function(url) {
       event.preventDefault();
       win.hide();
     }
-  });
-
-  win.webContents.on('new-window', function(event, url) {
-    event.preventDefault();
-    shell.openExternal(url);
   });
 
   return win;

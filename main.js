@@ -1,4 +1,4 @@
-const {app, ipcMain} = require('electron');
+const {app, ipcMain, shell, BrowserWindow} = require('electron');
 const contextMenu = require('electron-context-menu');
 
 const windowFactory = require('./window.js');
@@ -23,6 +23,12 @@ app.on('activate', () => {
 app.on('browser-window-focus', () => {
   window.webContents.send('clear-notifications');
 });
+app.on('web-contents-created', (event, contents) => {
+  contents.on('new-window', function(event, url) {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
+})
 
 app.on('before-quit', () => {
   if (isMacOS()) {
