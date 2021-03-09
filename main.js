@@ -15,13 +15,16 @@ app.on('window-all-closed', (event) => {
 
 app.on('activate', () => {
   BrowserWindow.getAllWindows().forEach((window) => {
-  window.show();
+    window.show();
   })
 });
 
-app.on('browser-window-focus', () => {
-  window.webContents.send('clear-notifications');
+app.on('browser-window-focus', (event, window) => {
+  if (window.webContents) {
+    window.webContents.send('clear-notifications');
+  }
 });
+
 app.on('web-contents-created', (event, contents) => {
   contents.on('new-window', function(event, url) {
     event.preventDefault();
@@ -35,9 +38,18 @@ app.on('before-quit', () => {
   }
 });
 
+function isWindowsFocused() {
+  return BrowserWindow.getAllWindows().reduce((accumulator, currentValue) => {
+    return accumulator || currentValue.isFocused();
+  }, false);
+}
+
 ipcMain.on('update-badge', function(event, count) {
   const badgeCount = count === null ? 0 : count;
-  app.setBadgeCount(badgeCount);
+
+  if(!isWindowsFocused() || badgeCount === 0) {
+    app.setBadgeCount(badgeCount);
+  }  
 });
 
 contextMenu({
