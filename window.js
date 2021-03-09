@@ -1,6 +1,7 @@
 const path = require('path');
 const {shell, BrowserWindow} = require('electron');
 const windowStateKeeper = require('electron-window-state');
+const Badge = require('electron-windows-badge');
 
 const {isMacOS, isWindows} = require('./os-check');
 
