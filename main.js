@@ -3,11 +3,8 @@ const contextMenu = require('electron-context-menu');
 
 const windowFactory = require('./window.js');
 const {isMacOS} = require('./os-check');
-
-let window = null;
-
 app.whenReady().then(() => {
-  window = windowFactory.createWindow('https://chat.google.com');
+  windowFactory.createWindow('https://chat.google.com');
 });
 
 app.on('window-all-closed', (event) => {
@@ -17,7 +14,9 @@ app.on('window-all-closed', (event) => {
 });
 
 app.on('activate', () => {
+  BrowserWindow.getAllWindows().forEach((window) => {
   window.show();
+  })
 });
 
 app.on('browser-window-focus', () => {
