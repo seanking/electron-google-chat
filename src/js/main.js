@@ -3,6 +3,7 @@ const contextMenu = require('electron-context-menu');
 
 const windowFactory = require('./window.js');
 const {isMacOS} = require('./os-check');
+
 app.whenReady().then(() => {
   windowFactory.createWindow('https://chat.google.com');
 });

@@ -3,7 +3,7 @@
   "productName": "Google Chat",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/js/main.js",
   "scripts": {
     "lint": "eslint .",
     "start": "electron .",
