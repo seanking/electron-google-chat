@@ -17,7 +17,7 @@ app.on('window-all-closed', (event) => {
 app.on('activate', () => {
   BrowserWindow.getAllWindows().forEach((window) => {
     window.show();
-  })
+  });
 });
 
 app.on('browser-window-focus', (event, window) => {
@@ -31,7 +31,7 @@ app.on('web-contents-created', (event, contents) => {
     event.preventDefault();
     shell.openExternal(url);
   });
-})
+});
 
 app.on('before-quit', () => {
   if (isMacOS()) {
@@ -39,6 +39,11 @@ app.on('before-quit', () => {
   }
 });
 
+/**
+ * Identify if the any browser windows have focus.
+ *
+ * @return {boolean} True if a browser windows has focus.
+ */
 function isWindowsFocused() {
   return BrowserWindow.getAllWindows().reduce((accumulator, currentValue) => {
     return accumulator || currentValue.isFocused();
@@ -48,9 +53,9 @@ function isWindowsFocused() {
 ipcMain.on('update-badge', function(event, count) {
   const badgeCount = count === null ? 0 : count;
 
-  if(!isWindowsFocused() || badgeCount === 0) {
+  if (!isWindowsFocused() || badgeCount === 0) {
     app.setBadgeCount(badgeCount);
-  }  
+  }
 });
 
 contextMenu({
