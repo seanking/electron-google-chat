@@ -18,7 +18,8 @@
       "category": "public.app-category.social-networking"
     },
     "linux": {
-      "target": "rpm"
+      "target": "rpm",
+      "icon": "build/icon.icns"
     }
   },
   "keywords": [],
