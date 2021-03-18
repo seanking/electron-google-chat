@@ -12,7 +12,7 @@
     "dist": "electron-builder"
   },
   "build": {
-    "productName": "Chat",
+    "productName": "Google Chat",
     "appId": "dev.seanking.chat",
     "mac": {
       "category": "public.app-category.social-networking"
