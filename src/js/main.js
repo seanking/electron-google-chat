@@ -58,6 +58,13 @@ ipcMain.on('update-badge', function(event, count) {
   }
 });
 
+ipcMain.on('focus', function(event, count) {
+  BrowserWindow.getAllWindows().forEach((window) => {
+    window.moveTop();
+    window.focus();
+  });
+});
+
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [
     {
