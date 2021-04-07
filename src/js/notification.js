@@ -20,7 +20,12 @@ class NotificationOverride extends Notification {
   constructor(title, options) {
     super(title, options);
     ipc.send('update-badge', ++notificationCount);
+
+    this.onclick = (event) => {
+      ipc.send('focus');
+    };
   }
+
 }
 
 window.Notification = NotificationOverride;
