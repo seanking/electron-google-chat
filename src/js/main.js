@@ -29,7 +29,9 @@ app.on('browser-window-focus', (event, window) => {
 app.on('web-contents-created', (event, contents) => {
   contents.on('new-window', function(event, url) {
     event.preventDefault();
-    shell.openExternal(url);
+    if (!url.includes('about:blank')) {
+      shell.openExternal(url);
+    }
   });
 });
 
