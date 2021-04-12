@@ -4,7 +4,7 @@ const windowStateKeeper = require('electron-window-state');
 const Badge = require('electron-windows-badge');
 
 const {isMacOS, isWindows} = require('./os-check');
-const { userAgent } = require('./user-agent');
+const {userAgent} = require('./user-agent');
 
 /**
  * Creates a new BrowserWindow.
